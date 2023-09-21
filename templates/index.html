@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Phishing URL Detector</title>
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 class="text-center">Phishing URL Detector</h1>
+            <form id="checkForm" class="mt-4">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="url" placeholder="Enter the URL">
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary btn-block" value="Check">
+                </div>
+            </form>
+            <pre id="results" class="bg-dark text-light p-3" style="display: none;"></pre>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    $("#checkForm").submit(function(e) {
+        e.preventDefault();
+        $.post("/detect", { url: $("input[name='url']").val() }, function(data) {
+            $("#results").text(JSON.stringify(data, null, 2)).show();
+        });
+    });
+</script>
+
+</body>
+</html>
